@@ -16,7 +16,7 @@ e = ones(n,1);
             x0 + e'*x + total_trans_cost ==1;
             x == xx +y;
             x>=0;
-            trans_cost*sum(abs(y))== total_trans_cost;
+            trans_cost*sum(abs(y))<= total_trans_cost;
             abs(x-0.1)<=0.05;        
                     
     cvx_end

@@ -49,7 +49,7 @@ benchmark_x = x; % initial proportions for benchmark portfolio
 
 rate_of_decay = 1 - r_w_f_o_y_e^(sample_frequency/52);
 
-initial_wealth = wealth
+initial_wealth = wealth;
 benchmark_wealth = wealth;	
 
 rebalance_dates = start + horizon*(0:number_rebalances-1);
@@ -81,8 +81,10 @@ for i = 1:length(rebalance_dates)
     x0 = x0/total;
     x = x/total;
     	% Rescaling x0 and x so that the sum is 1 (i.e., proportions of current wealth)
-    	
-    benchmark_wealth = ?????;
+    
+    benchmark_wealth = benchmark_wealth*(1-trans_cost*sum(abs(benchmark_x-0.1)));
+    benchmark_x0 =0.1;
+    benchmark_x = 0.1*ones(length(x),1);
     	% Update benchmark_wealth by subtracting transaction costs required
     	% for rebalancing to an equal weight portfolio (10% in bank and 10%
     	% in each ETF). Think of the benchmark portfolio having now been
@@ -94,7 +96,7 @@ for i = 1:length(rebalance_dates)
     	% vector of actual returns for risky assets (this is a row vector)	
     
     multiplier = 1 + mu0*x0 + returns*x;	
-    wealth = multiplier*wealth
+    wealth = multiplier*wealth;
         	% by leaving off the semicolon, you can watch how wealth changes as the program runs
 
     if wealth<=0
@@ -107,10 +109,10 @@ for i = 1:length(rebalance_dates)
     % these are the proportions of current wealth invested in assets
     
     benchmark_multiplier = 1 + (mu0 + sum(returns))/(n+1);
-    benchmark_wealth = benchmark_multiplier*benchmark_wealth
+    benchmark_wealth = benchmark_multiplier*benchmark_wealth;
     
-    benchmark_x0 = ????;
-    benchmark_x = ????;
+    benchmark_x0 = (1+mu0)*benchmark_x0/benchmark_multiplier;
+    benchmark_x = benchmark_x.*(1+returns)'/benchmark_multiplier;
     	% At the beginning of the time period, the benchmark portfolio was
     	% rebalanced to have 10% of wealth in the bank and each ETF. 
     	% At the end of the period, the portfolio is no longer equally balanced.
